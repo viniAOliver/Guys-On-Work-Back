@@ -4,6 +4,7 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 	"guys_on_work_back/entity"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Interface represents to User System Repository

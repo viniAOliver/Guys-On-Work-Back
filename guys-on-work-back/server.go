@@ -28,6 +28,6 @@ func main() {
 	}
 
 	// Starting the server, specifying the port on which the service will be available
-	server.Run(":8888")
+	server.Run(":8080")
 
 }
