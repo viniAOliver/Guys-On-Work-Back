@@ -3,8 +3,8 @@ package repository
 // Imports
 import (
 	"github.com/jinzhu/gorm"
-	"guys_on_work_back/entity"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"guys_on_work_back/entity"
 )
 
 // Interface represents to User System Repository
@@ -26,7 +26,7 @@ type userSystemRepository struct {
 func NewUserSystemRepository() UserSystemRepository {
 
 	// Command the access the database
-	base := "host=localhost user=golang password=root dbname=golang port=5432 sslmode=disable"
+	base := "host=localhost user=root password=root dbname=guys_work_db port=5432 sslmode=disable"
 
 	// Connection to database
 	db, err := gorm.Open("postgres", base)
