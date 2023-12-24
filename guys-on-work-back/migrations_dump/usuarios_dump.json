@@ -1,0 +1,16 @@
+[
+  {
+    "id": 3,
+    "user_system_name": "Caio Henrique 4",
+    "user_system_email": "henri4@gmail.com",
+    "user_system_password": "$2a$04$kjyFFR5SbatulPkaJznU/uL1SUcqJcVs1InunCRWHzs.7CF0PsVzS",
+    "is_active": 0
+  },
+  {
+    "id": 4,
+    "user_system_name": "Caio Henrique 4",
+    "user_system_email": "henri6@gmail.com",
+    "user_system_password": "$2a$04$6QLxRDTeyZkv2A6uCcGlO.hThADLMa7KaI9AWqEulC46BFFaD/JMa",
+    "is_active": 0
+  }
+]

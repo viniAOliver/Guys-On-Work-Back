@@ -25,6 +25,10 @@ func main() {
 	userSystemRoute := server.Group("/user_system")
 	{
 		userSystemRoute.GET("/", userSystemController.UserSystemList)
+		userSystemRoute.GET("/:id", userSystemController.UserSystemDetail)
+		userSystemRoute.POST("/create", userSystemController.UserSystemCreate)
+		userSystemRoute.PUT("/update/:id", userSystemController.UserSystemUpdate)
+		userSystemRoute.DELETE("/delete/:id", userSystemController.UserSystemDelete)
 	}
 
 	// Starting the server, specifying the port on which the service will be available

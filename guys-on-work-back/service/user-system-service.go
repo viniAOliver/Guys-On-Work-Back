@@ -11,6 +11,10 @@ type UserSystemService interface {
 
 	// Methods of service
 	UserSystemList() []entity.UserSystem
+	UserSystemDetail(userSystemID string) (*entity.UserSystem, error)
+	UserSystemCreate(userSystem entity.UserSystem) (entity.UserSystem, error)
+	UserSystemUpdate(userSystemID string, userSystem entity.UserSystem) (entity.UserSystem, error)
+	UserSystemDelete(userSystemID string) (entity.UserSystem, error)
 }
 
 // Struct representing User System Service
@@ -37,3 +41,34 @@ func (service *userSystemService) UserSystemList() []entity.UserSystem {
 
 }
 
+// Method to detail user system
+func (service *userSystemService) UserSystemDetail(userSystemID string) (*entity.UserSystem, error) {
+
+	// Return the data of the system user - calling the service.repository
+	return service.userSystemRepository.UserSystemDetail(userSystemID)
+
+}
+
+// Method to create a user system
+func (service *userSystemService) UserSystemCreate(userSystem entity.UserSystem) (entity.UserSystem, error) {
+
+	// Return the data of the system user created - calling the service.repository
+	return service.userSystemRepository.UserSystemCreate(userSystem)
+
+}
+
+// Method to update a user system
+func (service *userSystemService) UserSystemUpdate(userSystemID string, userSystem entity.UserSystem) (entity.UserSystem, error) {
+
+	// Return the data of the system user updated - calling the service.repository
+	return service.userSystemRepository.UserSystemUpdate(userSystemID, userSystem)
+
+}
+
+// Method to delete a user system
+func (service *userSystemService) UserSystemDelete(userSystemID string) (entity.UserSystem, error) {
+
+	// Return the data of the system user deleted - calling the service.repository
+	return service.userSystemRepository.UserSystemDelete(userSystemID)
+
+}
