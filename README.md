@@ -23,7 +23,6 @@ Bem-vindo ao backend do Guys On Work, este repositório é responsável pela ló
 - [Primeiros Passos](#primeiros-passos)
   - [Pré-requisitos](#pré-requisitos)
   - [Instalação](#instalação)
-- [Uso](#uso)
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 
