@@ -35,5 +35,9 @@ func (r *userSystemRoutesImpl) UserSystemRoutes(server *gin.Engine) {
 	userSystemRoute := server.Group("/user_system")
 	{
 		userSystemRoute.GET("/", r.userSystemController.UserSystemList)
+		userSystemRoute.GET("/:id", userSystemController.UserSystemDetail)
+		userSystemRoute.POST("/create", userSystemController.UserSystemCreate)
+		userSystemRoute.PUT("/update/:id", userSystemController.UserSystemUpdate)
+		userSystemRoute.DELETE("/delete/:id", userSystemController.UserSystemDelete)
 	}
 }
