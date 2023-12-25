@@ -10,7 +10,7 @@ import (
 func HashPassword(password string) (string, error) {
 
     // Generate a hash from the password and the provided cost (number of iterations)
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 4)
+    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 
     // Checking there was any error during the hash generation
     if err != nil {
