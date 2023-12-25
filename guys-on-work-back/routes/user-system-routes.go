@@ -4,12 +4,14 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"guys_on_work_back/controller"
+	"guys_on_work_back/middleware"
 	"guys_on_work_back/repository"
 	"guys_on_work_back/service"
 )
 
 // Interface represents to User System Routes
 type UserSystemRoutes interface {
+
 	// Methods of routes
 	UserSystemRoutes(server *gin.Engine)
 }
@@ -32,7 +34,9 @@ func NewUserSystemRoutes() UserSystemRoutes {
 }
 
 func (r *userSystemRoutesImpl) UserSystemRoutes(server *gin.Engine) {
+
 	userSystemRoute := server.Group("/user_system")
+	userSystemRoute.Use(middleware.AuthMiddleware())
 	{
 		userSystemRoute.GET("/", r.userSystemController.UserSystemList)
 		userSystemRoute.GET("/:id", userSystemController.UserSystemDetail)
@@ -40,4 +44,5 @@ func (r *userSystemRoutesImpl) UserSystemRoutes(server *gin.Engine) {
 		userSystemRoute.PUT("/update/:id", userSystemController.UserSystemUpdate)
 		userSystemRoute.DELETE("/delete/:id", userSystemController.UserSystemDelete)
 	}
+
 }

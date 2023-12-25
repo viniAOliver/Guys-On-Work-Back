@@ -18,6 +18,7 @@ type UserSystemRepository interface {
 	// Methods of repository
 	UserSystemList() []entity.UserSystem
 	UserSystemDetail(userSystemID string) (*entity.UserSystem, error)
+	UserSystemByEmailDetail(userSystemID string) (*entity.UserSystem, error)
 	UserSystemCreate(userSystem entity.UserSystem) (entity.UserSystem, error)
 	UserSystemUpdate(userSystemID string, userSystem entity.UserSystem) (entity.UserSystem, error)
 	UserSystemDelete(userSystemID string) (entity.UserSystem, error)
@@ -47,11 +48,14 @@ func NewUserSystemRepository() UserSystemRepository {
 
 	}
 
+	var nameTable string = "user_system"
+
 	// TODO: Mudar isso para package de migrates
-	if db.Table("user_system").HasTable(&entity.UserSystem{}) {
+	if db.Table(nameTable).HasTable(&entity.UserSystem{}) {
+
 		// Recuperar dados da tabela
 		var users []entity.UserSystem
-		db.Table("user_system").Find(&users)
+		db.Table(nameTable).Find(&users)
 
 		// Converter dados para formato desejado (por exemplo, JSON)
 		data, err := json.MarshalIndent(users, "", "  ")
@@ -60,7 +64,7 @@ func NewUserSystemRepository() UserSystemRepository {
 		}
 
 		// Salvar dados em um arquivo (por exemplo, users_dump.json)
-		fileName := fmt.Sprintf("migrations_dump/%s_dump.json", "usuarios")
+		fileName := fmt.Sprintf("migrations_dump/%s_dump.json", nameTable)
 		file, err := os.Create(fileName)
 		if err != nil {
 			log.Fatal(err)
@@ -73,7 +77,7 @@ func NewUserSystemRepository() UserSystemRepository {
 			log.Fatal(err)
 		}
 
-		db.DropTableIfExists(&entity.UserSystem{})
+		db.Table(nameTable).DropTableIfExists(&entity.UserSystem{})
 
 		// Ler dados do arquivo de dump
 		file, err = os.Open(fileName)
@@ -89,15 +93,15 @@ func NewUserSystemRepository() UserSystemRepository {
 		}
 
 		// Migrate of entity from database ( "user_system" )
-		db.Table("user_system").AutoMigrate(&entity.UserSystem{})
+		db.Table(nameTable).AutoMigrate(&entity.UserSystem{})
 		// Inserir dados na tabela
 		for _, user := range users {
-			db.Create(&user)
+			db.Table(nameTable).Create(&user)
 		}
 	} else {
 
 		// Migrate of entity from database ( "user_system" )
-		db.Table("user_system").AutoMigrate(&entity.UserSystem{})
+		db.Table(nameTable).AutoMigrate(&entity.UserSystem{})
 	}
 
 	// Return the user system repository information
@@ -130,6 +134,28 @@ func (db *userSystemRepository) UserSystemDetail(userSystemID string) (*entity.U
 	// Execute the query, and capturing the result and the possible error
 	// SELECT * FROM userSystem WHERE ID = userSystemID;
 	result := db.db.Table("user_system").Where("id = ?", userSystemID).First(&userSystem)
+
+	// If there is an result.Error
+	if result.Error != nil {
+
+		// Return {data: null, error: result.Error}
+		return nil, result.Error
+	}
+
+	// Return {data: userSystem, error: null}
+	return &userSystem, nil
+
+}
+
+// Method to detail a user system by Detail
+func (db *userSystemRepository) UserSystemByEmailDetail(userSystemEmail string) (*entity.UserSystem, error) {
+
+	// Defining a variable that will store the system users
+	var userSystem entity.UserSystem
+
+	// Execute the query, and capturing the result and the possible error
+	// SELECT * FROM userSystem WHERE ID = userSystemID;
+	result := db.db.Table("user_system").Where("user_system_email = ?", userSystemEmail).First(&userSystem)
 
 	// If there is an result.Error
 	if result.Error != nil {

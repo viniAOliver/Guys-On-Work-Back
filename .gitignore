@@ -17,6 +17,9 @@
 # Migration files
 guys-on-work-back/migrations_dump
 
+# Upload files
+guys-on-work-back/uploads
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
 

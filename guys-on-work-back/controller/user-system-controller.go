@@ -2,10 +2,12 @@ package controller
 
 // Imports
 import (
-	"github.com/gin-gonic/gin"
 	"guys_on_work_back/entity"
 	"guys_on_work_back/service"
 	"guys_on_work_back/util"
+
+
+	"github.com/gin-gonic/gin"
 )
 
 // Interface represents to User System Controller
@@ -75,22 +77,31 @@ func (c *userSystemController) UserSystemDetail(context *gin.Context) {
 
 }
 
+
 // Method to create a user system
 func (c *userSystemController) UserSystemCreate(context *gin.Context) {
+
+	// Set the maximum memory for file uploads (in bytes)
+	context.Request.ParseMultipartForm(10 << 20) 
 
 	// Defining a variable that will be filled with the request data
 	var userSystem entity.UserSystem
 
 	// Checking whether the information sent is valid according to the entity
-	err := context.ShouldBindJSON(&userSystem)
+	// Extract user data from the form
+	userSystem.UserSystemName = context.PostForm("user_system_name")
+	userSystem.UserSystemEmail = context.PostForm("user_system_email")
+	userSystem.UserSystemPassword = context.PostForm("user_system_password")
 
-	// If there is an error
+	fileName, err:= util.UploadFile(context)
+
 	if err != nil {
+		context.JSON(500, gin.H{"error": err.Error()})
+		return 
+	}
 
-		// Return JSON with the error found in the system user registration and status code 400 - BAD REQUEST
-		context.JSON(400, gin.H{"error": err.Error()})
-		return
-
+	if fileName != nil && *fileName != "" {
+		userSystem.UserSystemPhoto = *fileName
 	}
 
 	// Calling the hash password method using the util, and capturing the hashed password and the possible error

@@ -11,6 +11,7 @@ type UserSystem struct {
 	UserSystemName     string    `json:"user_system_name" binding:"min=3,max=50" gorm:"type:varchar(50);not null"`
 	UserSystemEmail    string    `json:"user_system_email" binding:"min=3,max=50" gorm:"type:varchar(50);unique;not null"`
 	UserSystemPassword string    `json:"user_system_password" binding:"min=8,max=255" gorm:"type:varchar(255);not null"`
+	UserSystemPhoto    string    `json:"user_system_photo" gorm:"null"`
 	CreatedAt          time.Time `json:"-" time_format:"2006-01-02" time_utc:"1"`
 	IsActive           int       `json:"is_active"`
 }
