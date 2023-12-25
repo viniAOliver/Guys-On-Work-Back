@@ -4,12 +4,12 @@ package repository
 import (
 	"encoding/json"
 	"fmt"
-	"guys_on_work_back/entity"
 	"log"
 	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"guys_on_work_back/entity"
 )
 
 // Interface represents to User System Repository
@@ -72,7 +72,6 @@ func NewUserSystemRepository() UserSystemRepository {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 
 		db.DropTableIfExists(&entity.UserSystem{})
 
@@ -173,7 +172,6 @@ func (db *userSystemRepository) UserSystemUpdate(userSystemID string, userSystem
 	return userSystem, nil
 
 }
-
 
 // Method to delete a user system
 func (db *userSystemRepository) UserSystemDelete(userSystemID string) (entity.UserSystem, error) {

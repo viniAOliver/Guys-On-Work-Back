@@ -2,17 +2,14 @@ package main
 
 // Imports
 import (
+	"guys_on_work_back/routes"
+
 	"github.com/gin-gonic/gin"
-	"guys_on_work_back/controller"
-	"guys_on_work_back/repository"
-	"guys_on_work_back/service"
 )
 
 // Initializing project controllers
 var (
-	userSystemRepository repository.UserSystemRepository = repository.NewUserSystemRepository()
-	userSystemService    service.UserSystemService       = service.NewUserSystemService(userSystemRepository)
-	userSystemController controller.UserSystemController = controller.NewUserSystemController(userSystemService)
+	userSystemRoutes routes.UserSystemRoutes = routes.NewUserSystemRoutes()
 )
 
 // Main function
@@ -22,14 +19,7 @@ func main() {
 	server := gin.Default()
 
 	// Route Group for the User System
-	userSystemRoute := server.Group("/user_system")
-	{
-		userSystemRoute.GET("/", userSystemController.UserSystemList)
-		userSystemRoute.GET("/:id", userSystemController.UserSystemDetail)
-		userSystemRoute.POST("/create", userSystemController.UserSystemCreate)
-		userSystemRoute.PUT("/update/:id", userSystemController.UserSystemUpdate)
-		userSystemRoute.DELETE("/delete/:id", userSystemController.UserSystemDelete)
-	}
+	userSystemRoutes.UserSystemRoutes(server)
 
 	// Starting the server, specifying the port on which the service will be available
 	server.Run(":8080")
