@@ -21,6 +21,7 @@ func main() {
 	server := gin.Default()
 	server.Use(cors.Default())
 
+	// Route the login
 	server.POST("/login", middleware.LoginHandler)
 
 	// Route Group for the User System
